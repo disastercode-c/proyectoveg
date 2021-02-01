@@ -1,0 +1,33 @@
+extends ../layout 
+
+block content
+
+    include ../navbar
+    br
+    br
+    br
+    br
+    h2.page-section-heading.text-center.text-uppercase.text-secondary.mb-0.mt-5 Actualización de Usuarios
+
+    form.container.p-3(action=`/usuarios/update/${user.id}` method='post')
+        .form-group
+        label(for='exampleInputEmail1') Id
+        input#exampleInputEmail1.form-control(type='text' placeholder='ID' value=user.id name="id" disabled)
+        .form-group
+        label(for='exampleInputEmail1') Nombre
+        input#exampleInputEmail1.form-control(type='text' placeholder='Nombre' value=user.nombre name="nombre")
+        .form-group
+        label(for='exampleInputEmail1') Primer Apellido
+        input#exampleInputEmail1.form-control(type='text' placeholder='Primer Apellido' value=user.primerApellido name="primerApellido")
+        .form-group
+        label(for='exampleInputEmail1') Rut
+        input#exampleInputEmail1.form-control(type='text' placeholder='Rut' value=user.rut name="rut" disabled)
+        .form-group
+        label(for='exampleInputEmail1') Email
+        input#exampleInputEmail1.form-control(type='email' aria-describedby='emailHelp' placeholder='Enter email' value=user.correo name="correo")
+        small#emailHelp.form-text.text-muted We&apos;ll never share your email with anyone else.
+        .form-group
+        label(for='exampleInputPassword1') Ubicación
+        input#exampleInputPassword1.form-control(type='text' placeholder='Latitud' value=user.ubicacion[0] name="lat")
+        input#exampleInputPassword1.form-control(type='text' placeholder='Longitud' value=user.ubicacion[1] name="lng")
+        button.btn.btn-primary.p-3.mt-4(type='submit') Submit

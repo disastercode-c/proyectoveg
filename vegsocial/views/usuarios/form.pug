@@ -1,0 +1,24 @@
+block content
+form.container.mt-5(action='/usuarios/create' method='POST')
+    .form-group
+        label(for='exampleInputEmail1') Id
+        input#exampleInputEmail1.form-control(type='text' placeholder='Nombre' name="id")
+    .form-group
+        label(for='exampleInputEmail1') Nombre
+        input#exampleInputEmail1.form-control(type='text' placeholder='Nombre' name="nombre")
+    .form-group
+        label(for='exampleInputEmail1') Primer Apellido
+        input#exampleInputEmail1.form-control(type='text' placeholder='Primer Apellido' name="primerApellido")
+    .form-group
+        label(for='exampleInputEmail1') Rut
+        input#exampleInputEmail1.form-control(type='text' placeholder='Rut' name="rut")
+    .form-group
+        label(for='exampleInputEmail1') Email
+        input#exampleInputEmail1.form-control(type='email' aria-describedby='emailHelp' placeholder='Enter email' name="correo")
+        small#emailHelp.form-text.text-muted We&apos;ll never share your email with anyone else.
+    .form-group
+        label(for='exampleInputPassword1') Ubicación
+        input#exampleInputPassword1.form-control(type='text' placeholder='Latitud' name="lat")
+        input#exampleInputPassword1.form-control(type='text' placeholder='Longitud' name="lng")
+    button.btn.btn-primary(type='submit') Submit
+
