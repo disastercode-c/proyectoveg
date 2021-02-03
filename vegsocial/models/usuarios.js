@@ -13,7 +13,6 @@ const validateEmail = (email)=>{
 }
 
 var usuarioSchema = new Schema({
-  code: Number,
   nombre: String,
   primerApellido: String,
   password:{type: String, required: [true, 'La contraseña es obligatoria']},
@@ -50,9 +49,8 @@ usuarioSchema.statics.allUsers= (u)=>{
   return this.find({}, u)
 }
 
-usuarioSchema.statics.createInstance = (code, nombre, primerApellido, rut, correo, ubicacion)=>{
+usuarioSchema.statics.create = (nombre, primerApellido, rut, correo, ubicacion)=>{
   return new this({
-    code: code,
     nombre: nombre,
     primerApellido: primerApellido,
     rut: rut,

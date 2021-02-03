@@ -9,7 +9,6 @@ exports.usuarios_list = (req, res) => {
 exports.create_usuario = (req, res) => {
   let ubicacion = [req.body.lat, req.body.lng];
   var user = Usuario.createInstance(
-    req.body.id,
     req.body.nombre,
     req.body.primerApellido,
     req.body.rut,
