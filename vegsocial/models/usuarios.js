@@ -1,16 +1,44 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
+const bcrypt = require('bcrypt')
+const uniqueValidator = require('mongoose-unique-validator')
+const crypto = require('crypto')
+const {send} = require('../public/javascripts/mailer/nodemailer')
+
+const saltRounds = 10;
+
+const validateEmail = (email)=>{
+  var regEx = /^\w+([\.-]?\w)+@\w+([.\-]?\w+)*(\.\w{2,3})+$/;
+  return regEx.test(email)
+}
 
 var usuarioSchema = new Schema({
   code: Number,
   nombre: String,
   primerApellido: String,
+  password:{type: String, required: [true, 'La contraseña es obligatoria']},
   rut: String,
-  correo: String,
+  correo: {type: String, trim: true, required: [true, 'el email es obligatorio'], unique: true, lowercase: true, validate: [validateEmail, 'Ingrese un mail válido, por favor']},
+  match: /^\w+([\.-]?\w)+@\w+([.\-]?\w+)*(\.\w{2,3})+$/,
   ubicacion: {
     type: [Number], index: {type: '2dsphere', sparse: true}
-  }
+  },
+  passwordResetToken: String,
+  passwordResetTokenExpires: Date,
+  verificado: {type: Boolean, default: false}
+})
 
+usuarioSchema.methods.validPassword = (password)=>{
+  return bcrypt.compareSync(password, this.password);
+}
+
+usuarioSchema.plugin(uniqueValidator, {message: 'El {PATH} ya existe con otro usuario'})
+
+usuarioSchema.pre('save', (next)=>{
+  if(this.isModified('password')){
+    this.password = bcrypt.hashSync(this.password, saltRounds)
+  }
+  next();
 })
 
 
@@ -30,6 +58,18 @@ usuarioSchema.statics.createInstance = (code, nombre, primerApellido, rut, corre
     rut: rut,
     correo: correo,
     ubicacion: ubicacion
+  })
+}
+
+usuarioSchema.methods.enviar_email_bienvenida = (cb)=>{
+  const token = new token({_userId: this.discriminator, token:crypto.randomBytest(16).toString('hex')})
+  const email_destination = this.email;
+  token.save( async(err)=>{
+    if(err) {return console.log(err.message)}
+
+    await send(email_destination, (err)=>{
+      return console.log(err.message)
+    })
   })
 }
 
