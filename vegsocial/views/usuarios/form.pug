@@ -1,8 +1,6 @@
 block content
+
 form.container.mt-5(action='/usuarios/create' method='POST')
-    .form-group
-        label(for='exampleInputEmail1') Id
-        input#exampleInputEmail1.form-control(type='text' placeholder='Nombre' name="id")
     .form-group
         label(for='exampleInputEmail1') Nombre
         input#exampleInputEmail1.form-control(type='text' placeholder='Nombre' name="nombre")
@@ -14,14 +12,10 @@ form.container.mt-5(action='/usuarios/create' method='POST')
         input#exampleInputEmail1.form-control(type='text' placeholder='Rut' name="rut")
     .form-group
         label(for='pwd') Password
-        input#pwd.form-control(type='password' placeholder='Rut' name="password" class=errors.password ? 'is-invalid' : '')
-        if errors.password
-            small#passwordHelp.text-danger = errors.password.message
+        input#pwd.form-control(type='password' placeholder='Password' name="password" )
     .form-group
         label(for='confirm_pwd') Confirmar Password
-        input#confirm_pwd.form-control(type='password' placeholder='Rut' name="password" class=errors.confirm_password ? 'is-invalid' : '')
-        if errors.confirm_password
-            small#passwordHelp.text-danger = errors.confirm_password.message
+        input#confirm_pwd.form-control(type='password' placeholder='Confirmar Password' name="confirm_password")
     .form-group
         label(for='exampleInputEmail1') Email
         input#exampleInputEmail1.form-control(type='email' aria-describedby='emailHelp' placeholder='Enter email' name="correo")
@@ -31,4 +25,5 @@ form.container.mt-5(action='/usuarios/create' method='POST')
         input#exampleInputPassword1.form-control(type='text' placeholder='Latitud' name="lat")
         input#exampleInputPassword1.form-control(type='text' placeholder='Longitud' name="lng")
     button.btn.btn-primary(type='submit') Submit
+
 

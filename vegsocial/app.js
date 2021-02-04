@@ -51,6 +51,40 @@ app.use('/usuarios', usuariosRouter);
 app.use('/api/usuarios', usuariosApiRouter);
 app.use('/token', tokenRouter)
 
+app.get('/login', (req,res,next)=>{
+  res.render('session/login')
+})
+app.post('/login', (req,res,next)=>{
+  passport.authenticate('local', (err, info)=>{
+    let usuario = {correo: req.body.correo, password: req.body.password}
+    console.log(usuario)
+    if(err) return next(err);
+    if(!usuario) return res.render('session/login', {info})
+    req.logIn(usuario, ()=>{
+      if (err) return next(err);
+      return res.redirect('/admin')
+    })
+  })(req, res, next)
+})
+
+app.get('/admin', (req,res)=>{
+  res.render('administrator/admin')
+})
+
+app.get('/forgotpassword', (req,res,next)=>{
+  res.render('session/login')
+})
+app.post('/forgotpassword', (req,res,next)=>{
+  
+})
+app.get('/logout', (req,res,next)=>{
+  req.logout();
+  res.redirect('/')
+})
+
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

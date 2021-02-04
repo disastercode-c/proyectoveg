@@ -2,12 +2,12 @@ const express = require("express")
 var router = express.Router();
 const usuarioController = require("../controllers/usuarios")
 
-router.get("/", usuarioController.usuarioslist)
-router.get("/create", usuarioController.createUsuarioGet)
-router.post("/create", usuarioController.createUsuarioPost)
-router.post("/delete/:id", usuarioController.removeUserById)
-router.get("/update/:id", usuarioController.usuariosUpdateGet)
-router.post("/update/:id", usuarioController.usuariosUpdatePost)
+router.get("/", usuarioController.list)
+router.get("/create", usuarioController.create_get)
+router.post("/create", usuarioController.create)
+router.post("/delete/:id", usuarioController.delete)
+router.get("/update/:id", usuarioController.update_get)
+router.post("/update/:id", usuarioController.update)
 
 
 

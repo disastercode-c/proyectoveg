@@ -3,7 +3,7 @@ var Token = require('../models/token')
 
 
 module.exports = {
-    confirmationGet = (req,res,next)=>{
+    confirmationGet : (req,res,next)=>{
         Token.findOne({token: req.params.token}, (err, token)=>{
             if(!token) return res.status(400).send({type: 'not-verified', msg: 'No se halla usuario'})
             Usuario.findById(token._userId, (err, usuario)=>{

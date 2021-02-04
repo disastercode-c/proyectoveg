@@ -70,12 +70,21 @@ module.exports = {
 
     create: (req,res,next)=>{
         if(req.body.password != req.body.confirm_password){
-            res.render('usuarios/create', {errors: {confirm_password:{message: 'No coinciden los passwords'}}, usuario: new Usuario({nombre: req.body.nombre})})
+            res.render('usuarios/create', {errors: {confirm_password:{message: 'No coinciden los passwords'}}})
             return
-        }else{
-            nuevoUsuario.enviar_email_bienvenida();
-            res.redirect('/usuarios')
         }
+            Usuario.create({nombre:req.body.nombre, primerApellido: req.body.primerApellido, rut: req.body.rut, password: req.body.password, correo: req.body.correo, ubicacion: [req.body.lat, req.body.lng]}, (err, nuevoUsuario)=>{
+                if(err){
+                    console.log(err.message)
+                    res.render('usuarios/create', {errors: err.message})
+                }else{
+                    res.redirect('/usuarios')
+                }
+            })
+
+            
+            
+
     },
 
     delete: (req,res,next)=>{

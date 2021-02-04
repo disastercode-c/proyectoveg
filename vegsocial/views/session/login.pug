@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+
+    include ../navbar
+    br
+    br
+    br
+    #LoginForm
+    .container.p-5.mt-5
+        .login-form
+            .main-div
+                .panel
+                    if info && info.message
+                        .alert.alert-danger=info.message
+                    h2 Login Usuario
+                    p Por favor, ingrese su email y su password
+                form#Login(action='/login' method='post')
+                    .form-group
+                        input#username.form-control(type='email' placeholder='email' name='correo')
+                    .form-group
+                        input#username.form-control(type='password' placeholder='password' name='password')
+                    .forgot
+                        a(href='forgotpassword') Olvidé mi password
+
+                    button.btn.btn-primary(type='submit') Login
+
