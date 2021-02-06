@@ -1,33 +1,24 @@
 extends ../layout
 
 block content
-
     include ../navbar    
+    br
+    br
+    br
     h1.text-center.p-3 Listado de Usuarios
     table.table.table-striped
         thead.thead-dark
             tr
-                th(scope='col') #
                 th(scope='col') Nombre
-                th(scope='col') Primer Apellido
+                th(scope='col') Descripción
                 th(scope='col') Rut
                 th(scope='col') Correo
-                th(scope='col') Ubicación
-                th(scope='col') Acción 1
-                th(scope='col') Acción 2
+
         tbody
          each user in usuarios 
           tr
-           td(scope='row')= user.id   
-           td= user.nombre 
-           td= user.primerApellido 
+           td Nombre emprendimiento
+           td Acá va la descripción del emprendimiento
            td= user.rut 
            td= user.correo 
-           td= user.ubicacion 
-           td
-            form.inline(method='post', action="usuarios/delete/"+user.id)
-                input(type='Hidden' name='id' value=user.id)
-                button.link-button(type='submit' name='submit_params' class='btn-danger') Eliminar
 
-           td
-             a.btn.btn-warning(href='/usuarios/update/'+user.id) Actualizar

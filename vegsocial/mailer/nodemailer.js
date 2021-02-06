@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer')
 const token = require('../models/token')
 
-const send = async (to, token)=>{
+const send = async (to, subject, text)=>{
     let transporter = nodemailer.createTransport({
         service : 'gmail',
         auth : {
@@ -13,8 +13,8 @@ const send = async (to, token)=>{
     let mailOptions = {
         from : 'nodemailerADL@gmail.com',
         to,
-        subject: 'Verificación de cuenta',
-        text: 'Hola, \n\n' + 'Por favor, verifique su cuenta haga click en el siguiente link : \n'+ 'http://localhost:3000' + '\/token/confirmation\/'+ token.token + '.\n'
+        subject,
+        text
     }
 
     const resSend = await transporter.send(mailOptions, (err, data)=>{

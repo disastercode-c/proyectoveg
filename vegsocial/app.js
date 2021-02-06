@@ -45,29 +45,39 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/api/usuarios', usuariosApiRouter);
 app.use('/token', tokenRouter)
 
+
 app.get('/login', (req,res,next)=>{
   res.render('session/login')
 })
+
 app.post('/login', (req,res,next)=>{
   passport.authenticate('local', (err, info)=>{
     let usuario = {correo: req.body.correo, password: req.body.password}
-    console.log(usuario)
     if(err) return next(err);
     if(!usuario) return res.render('session/login', {info})
     req.logIn(usuario, ()=>{
       if (err) return next(err);
-      return res.redirect('/admin')
+      if(usuario){
+        return res.redirect('/admin')
+      }else{
+        return res.redirect('/login')
+      }
     })
   })(req, res, next)
 })
 
+
+
 app.get('/admin', (req,res)=>{
+  
   res.render('administrator/admin')
 })
 

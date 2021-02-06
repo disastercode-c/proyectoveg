@@ -13,7 +13,7 @@ block content
                 .panel
                     if info && info.message
                         .alert.alert-danger=info.message
-                    h2 Login Usuario
+                    h2 Ingresar
                     p Por favor, ingrese su email y su password
                 form#Login(action='/login' method='post')
                     .form-group
@@ -21,7 +21,9 @@ block content
                     .form-group
                         input#username.form-control(type='password' placeholder='password' name='password')
                     .forgot
-                        a(href='forgotpassword') Olvidé mi password
+                        a(href='/forgotPassword') Olvidé mi password
 
                     button.btn.btn-primary(type='submit') Login
+
+
 

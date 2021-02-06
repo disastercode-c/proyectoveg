@@ -2,23 +2,27 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 var bcrypt = require('bcrypt')
 const uniqueValidator = require('mongoose-unique-validator')
-const crypto = require('crypto')
+var crypto = require('crypto')
 const {send} = require('../mailer/nodemailer')
 const Token = require('../models/token')
 
-const saltRounds = 10;
 
-const validateEmail = (email)=>{
-  var regEx = /^\w+([\.-]?\w)+@\w+([.\-]?\w+)*(\.\w{2,3})+$/;
-  return regEx.test(email)
+const validateEmail = (correo)=>{
+  const regEx = /^\w+([\.-]?\w)+@\w+([.\-]?\w+)*(\.\w{2,3})+$/;
+  return regEx.test(correo)
 }
 
 var usuarioSchema = new Schema({
   nombre: String,
   primerApellido: String,
+  comuna: {type: String, required: [true, 'Debe ingresar una comuna']},
   password:{type: String, required: [true, 'La contraseña es obligatoria']},
   rut: String,
-  correo: {type: String, trim: true, required: [true, 'el email es obligatorio'], unique: true, lowercase: true, validate: [validateEmail, 'Ingrese un mail válido, por favor']},
+  correo: {type: String, 
+    trim: true, required: [true, 'el email es obligatorio'], 
+    unique: true, 
+    lowercase: true, 
+    validate: [validateEmail, 'Ingrese un mail válido, por favor']},
   ubicacion: {
     type: [Number], index: {type: '2dsphere', sparse: true}
   },
@@ -27,33 +31,30 @@ var usuarioSchema = new Schema({
   verificado: {type: Boolean, default: false}
 })
 
-usuarioSchema.methods.validPassword = (password)=>{
-  return bcrypt.compareSync(password, this.password);
-}
+usuarioSchema.pre('save', ()=>{
+  if(this.isModified('password')){
+    this.password = bcrypt.hashSync(this.password, 10)
+  }
+})
+
 
 usuarioSchema.plugin(uniqueValidator, {message: 'El {PATH} ya existe con otro usuario'})
 
-
-
-usuarioSchema.statics.allUsers= (u)=>{
-  return this.find({}, u)
-}
-
-
-usuarioSchema.methods.enviar_email_bienvenida = ()=>{
-  const token = new Token({_userId: this.discriminator, token: crypto.randomBytest(16).toString('hex')})
-  const email_destination = this.email;
+usuarioSchema.methods.enviar_email_bienvenida = async()=>{
+  const token = new Token({_userId: this.id, token: crypto.randomBytes(16).toString('hex')})
+  const email_destination = this.correo;
   token.save( async(err)=>{
     if(err) {return console.log(err.message)}
 
-    await send(email_destination, token, (err)=>{
-      return console.log(err.message)
-    })
-  })
-}
+    let subject = 'Verificacion de cuenta'
+    let to= email_destination
+    let text = 'Hola, \n\n' + 'Por favor, para verificar su cuenta haga click en este enlace: \n' + 'http://localhost:3000/' + 'confirmation/' + token.token + '.\n'
+    const result = await send(to, subject, text)
 
-usuarioSchema.statics.add = (usuario, cb)=>{
-  this.create(usuario, cb)
+    if(result){
+      console.log('email enviado satisfactoriamente')
+    }
+  })
 }
 
 usuarioSchema.statics.findByCode = (ucode, cb)=>{
@@ -62,6 +63,11 @@ usuarioSchema.statics.findByCode = (ucode, cb)=>{
 
 usuarioSchema.statics.removeByCode = (ucode, cb)=>{
   return this.deleteOne({code: ucode}, cb)
+}
+
+
+usuarioSchema.methods.validPassword = (password)=>{
+  return bcrypt.compareSync(password, this.password);
 }
 
 // class Usuario {
