@@ -4,7 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const passport = require('./config/passport');
-const session = require('express-session');
 
 
 var mongoose = require('mongoose')
@@ -16,22 +15,12 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error'))
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var usuariosRouter = require('./routes/usuarios');
 var usuariosApiRouter = require('./routes/api/usuariosApi');
 var tokenRouter = require('./routes/token')
-
-const store = new session.MemoryStore;
-
+var sessionRouter = require('./routes/session')
 var app = express();
 
-app.use(session({
-  cookie: { maxAge: 24 * 60 * 60 * 1000},
-  store: store,
-  saveUnitialized: true,
-  resave: 'true',
-  secret: 'cualquiercosa123!'
-}))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -46,34 +35,25 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/api/usuarios', usuariosApiRouter);
 app.use('/token', tokenRouter)
+app.use('/login', sessionRouter)
+// app.get('/login', (req,res,next)=>{
+//   res.render('session/login')
+// })
 
-
-app.get('/login', (req,res,next)=>{
-  res.render('session/login')
-})
-
-app.post('/login', (req,res,next)=>{
-  passport.authenticate('local', (err, info)=>{
-    let usuario = {correo: req.body.correo, password: req.body.password}
-    if(err) return next(err);
-    if(!usuario) return res.render('session/login', {info})
-    req.logIn(usuario, ()=>{
-      if (err) return next(err);
-      if(usuario){
-        return res.redirect('/admin')
-      }else{
-        return res.redirect('/login')
-      }
-    })
-  })(req, res, next)
-})
-
+// app.post('/login', (req,res,next)=>{
+//   passport.authenticate('local', (err,usuario,info)=>{
+//     if(err) return next(err);
+//     if(!usuario) return res.render('session/login', {info})
+//     req.logIn(usuario, (err)=>{
+//       if (err) return next(err), console.log(err.message);
+//       return res.redirect('/admin')
+//     })
+//   })(req,res,next)
+//   })
 
 
 app.get('/admin', (req,res)=>{
@@ -91,9 +71,6 @@ app.get('/logout', (req,res,next)=>{
   req.logout();
   res.redirect('/')
 })
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

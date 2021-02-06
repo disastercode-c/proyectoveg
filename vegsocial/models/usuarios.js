@@ -15,7 +15,7 @@ const validateEmail = (correo)=>{
 var usuarioSchema = new Schema({
   nombre: String,
   primerApellido: String,
-  comuna: {type: String, required: [true, 'Debe ingresar una comuna']},
+  comuna: {type: String, required: [true, 'Debe ingresar una comuna'], default: 'Santiago'},
   password:{type: String, required: [true, 'La contraseña es obligatoria']},
   rut: String,
   correo: {type: String, 
@@ -31,11 +31,6 @@ var usuarioSchema = new Schema({
   verificado: {type: Boolean, default: false}
 })
 
-usuarioSchema.pre('save', ()=>{
-  if(this.isModified('password')){
-    this.password = bcrypt.hashSync(this.password, 10)
-  }
-})
 
 
 usuarioSchema.plugin(uniqueValidator, {message: 'El {PATH} ya existe con otro usuario'})
@@ -65,10 +60,6 @@ usuarioSchema.statics.removeByCode = (ucode, cb)=>{
   return this.deleteOne({code: ucode}, cb)
 }
 
-
-usuarioSchema.methods.validPassword = (password)=>{
-  return bcrypt.compareSync(password, this.password);
-}
 
 // class Usuario {
 //   constructor(id, nombre, primerApellido, rut, correo, ubicacion) {

@@ -8,8 +8,5 @@ router.post("/create", usuarioController.create)
 router.post("/delete", usuarioController.delete)
 router.get("/update/:id", usuarioController.update_get)
 router.post("/update/:id", usuarioController.update)
-router.get("/admin", usuarioController.admin)
-
-
 
 module.exports = router;
