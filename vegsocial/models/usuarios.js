@@ -32,7 +32,7 @@ var usuarioSchema = new Schema({
 usuarioSchema.plugin(uniqueValidator, {message: 'El {PATH} ya existe con otro usuario'})
 
 usuarioSchema.methods.enviar_email = (cb)=>{
-  let token = new Token({_userid: this.id, token: crypto.randomBytes(16).toString('hex')})
+  const token = new Token({_userid: this.id, token: crypto.randomBytes(16).toString('hex')})
   let email_destination = this.correo
   let subject = 'Email de bienvenida'
   let text = 'http://localhost:3000/'+ '\/token/confirmation\/' + token.token
@@ -46,5 +46,15 @@ usuarioSchema.methods.enviar_email = (cb)=>{
   })
 }
 
+usuarioSchema.methods.resetPassword = ()=>{
+  const token = new Token({_userid: this.id, token:crypto.randomBytes(16).toString('hex')})
+  let email_destination = this.email;
+  let subject = 'Reset password'
+  let text = 'http://localhost:3000/'+ '\/resetpassword\/' + token.token
+  token.save( async(err)=>{
+    if(err) {return console.log(err)}
+    await send(email_destination, subject, text)
+  })
+}
 
 module.exports = mongoose.model('Usuario', usuarioSchema);
