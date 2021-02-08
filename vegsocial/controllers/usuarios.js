@@ -41,7 +41,7 @@ module.exports = {
                     console.log(err.message)
                     res.render('usuarios/create', {errors: err.message})
                 }else{
-                    nuevoUsuario.enviar_email_bienvenida()
+                    nuevoUsuario.enviar_email();
                     res.redirect('/usuarios')
                 }
             })

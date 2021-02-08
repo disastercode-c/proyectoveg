@@ -17,8 +17,11 @@ db.on('error', console.error.bind(console, 'MongoDB connection error'))
 var indexRouter = require('./routes/index');
 var usuariosRouter = require('./routes/usuarios');
 var usuariosApiRouter = require('./routes/api/usuariosApi');
-var tokenRouter = require('./routes/token')
-var sessionRouter = require('./routes/session')
+var tokenRouter = require('./routes/token');
+var adminRouter = require('./routes/admin');
+var loginRouter = require('./routes/login');
+
+
 var app = express();
 
 
@@ -39,27 +42,9 @@ app.use('/', indexRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/api/usuarios', usuariosApiRouter);
 app.use('/token', tokenRouter)
-app.use('/login', sessionRouter)
-// app.get('/login', (req,res,next)=>{
-//   res.render('session/login')
-// })
+app.use('/admin', adminRouter)
+app.use('/login', loginRouter)
 
-// app.post('/login', (req,res,next)=>{
-//   passport.authenticate('local', (err,usuario,info)=>{
-//     if(err) return next(err);
-//     if(!usuario) return res.render('session/login', {info})
-//     req.logIn(usuario, (err)=>{
-//       if (err) return next(err), console.log(err.message);
-//       return res.redirect('/admin')
-//     })
-//   })(req,res,next)
-//   })
-
-
-app.get('/admin', (req,res)=>{
-  
-  res.render('administrator/admin')
-})
 
 app.get('/forgotpassword', (req,res,next)=>{
   res.render('session/login')

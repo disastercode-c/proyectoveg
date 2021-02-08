@@ -3,27 +3,33 @@ block content
 form.container.mt-5(action='/usuarios/create' method='POST')
     .form-group
         label(for='exampleInputEmail1') Nombre
-        input#exampleInputEmail1.form-control(type='text' placeholder='Nombre' name="nombre")
+        input#exampleInputEmail1.form-control(type='text' placeholder='Nombre' name="nombre" class=errors.nombre ? 'is-invalid':'')
     .form-group
         label(for='exampleInputEmail1') Primer Apellido
-        input#exampleInputEmail1.form-control(type='text' placeholder='Primer Apellido' name="primerApellido")
+        input#exampleInputEmail1.form-control(type='text' placeholder='Primer Apellido' name="primerApellido" class=errors.primerApellido ? 'is-invalid':'')
     .form-group
-        label(for='exampleInputEmail1') Rut
-        input#exampleInputEmail1.form-control(type='text' placeholder='Rut' name="rut")
+        label(for='rut') Rut
+        input#rut.form-control(type='text' placeholder='Rut' name="rut" class=errors.rut ? 'is-invalid':'')
+    .form-group
+        label(for='comuna') Comuna
+        input#comuna.form-control(type='text' placeholder='Comuna' name="comuna" class=errors.comuna ? 'is-invalid':'')
+    .form-group
+        label(for='nombreEmprendimiento') Nombre Emprendimiento
+        input#nombreEmprendimiento.form-control(type='text' placeholder='Nombre Emprendimiento' name="comuna" class=errors.nombreEmprendimiento ? 'is-invalid':'')
     .form-group
         label(for='pwd') Password
-        input#pwd.form-control(type='password' placeholder='Password' name="password" )
+        input#pwd.form-control(type='password' placeholder='Password' name="password"  class=errors.password ? 'is-invalid':'')
     .form-group
         label(for='confirm_pwd') Confirmar Password
-        input#confirm_pwd.form-control(type='password' placeholder='Confirmar Password' name="confirm_password")
+        input#confirm_pwd.form-control(type='password' placeholder='Confirmar Password' name="confirm_password" class=errors.confirm-password ? 'is-invalid':'')
     .form-group
         label(for='exampleInputEmail1') Email
-        input#exampleInputEmail1.form-control(type='email' aria-describedby='emailHelp' placeholder='Enter email' name="correo")
+        input#exampleInputEmail1.form-control(type='email' aria-describedby='emailHelp' placeholder='Enter email' name="correo" class=errors.correo ? 'is-invalid':'')
         small#emailHelp.form-text.text-muted We&apos;ll never share your email with anyone else.
     .form-group
         label(for='exampleInputPassword1') Ubicación
-        input#exampleInputPassword1.form-control(type='text' placeholder='Latitud' name="lat")
-        input#exampleInputPassword1.form-control(type='text' placeholder='Longitud' name="lng")
+        input#exampleInputPassword1.form-control(type='text' placeholder='Latitud' name="lat" class=errors.latitud ? 'is-invalid':'')
+        input#exampleInputPassword1.form-control(type='text' placeholder='Longitud' name="lng" class=errors.longitud ? 'is-invalid':'')
     button.btn.btn-primary(type='submit') Submit
 
 

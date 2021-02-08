@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer')
-const token = require('../models/token')
 
 const send = async (to, subject, text)=>{
     let transporter = nodemailer.createTransport({

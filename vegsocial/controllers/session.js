@@ -1,10 +1,10 @@
 
-module.exports = {
-    userLogin: (req,res)=>{
+    const userLogin= (req,res, next)=>{
         res.redirect('/')
-    },
-
-    loginView: (req,res)=>{
-        res.render('/login')
     }
-}
+
+    const loginView= (req,res,next)=>{
+        res.render('session/login')
+    }
+
+    module.exports = {userLogin, loginView}
