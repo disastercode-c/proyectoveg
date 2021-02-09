@@ -36,7 +36,7 @@ module.exports = {
             res.render('usuarios/create', {errors: {confirm_password:{message: 'No coinciden los passwords'}}})
             return
         }
-            Usuario.create({nombre:req.body.nombre, primerApellido: req.body.primerApellido, rut: req.body.rut, password: req.body.password, correo: req.body.correo, ubicacion: [req.body.lat, req.body.lng]}, (err, nuevoUsuario)=>{
+            Usuario.create({nombre:req.body.nombre, primerApellido: req.body.primerApellido, comuna: req.body.comuna, nombreEmprendimiento: req.body.nombreEmprendimiento, password: req.body.password, rut: req.body.rut, correo: req.body.correo, telefono: req.body.telefono, ubicacion: [req.body.lat, req.body.lng]}, (err, nuevoUsuario)=>{
                 if(err){
                     console.log(err.message)
                     res.render('usuarios/create', {errors: err.message})

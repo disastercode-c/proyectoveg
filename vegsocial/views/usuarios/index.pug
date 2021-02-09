@@ -5,20 +5,23 @@ block content
     br
     br
     br
-    h1.text-center.p-3 Emprendimientos
+    h1.text-center.p-3 Listado de Emprendimientos
     table.table.table-striped
         thead.thead-dark
             tr
-                th(scope='col') Nombre
+                th(scope='col') Nombre Emprendimiento
                 th(scope='col') Descripción
-                th(scope='col') Rut
-                th(scope='col') Correo
+                th(scope='col') Comuna
+                th(scope='col') Enlace a perfil
+                th(scope='col') Correo de contacto
 
         tbody
          each user in usuarios 
           tr
            td Nombre emprendimiento
            td Acá va la descripción del emprendimiento
-           td= user.rut 
-           td= user.correo 
+           td= user.comuna
+           td
+            a(href='http://localhost:3000/emprendedores/'+ user.nombre) Link del perfil 
+           td= user.correo
 

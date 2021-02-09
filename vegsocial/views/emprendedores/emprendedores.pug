@@ -1,0 +1,48 @@
+extends ../layout
+
+block content
+    
+    nav#mainNav.navbar.navbar-expand-lg.bg-secondary.text-uppercase.fixed-top
+        a.navbar-brand(href='/#') EMPRENVEG
+        button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+            span.navbar-toggler-icon
+        #navbarSupportedContent.collapse.navbar-collapse
+            ul.navbar-nav.mr-auto
+                li.nav-item.active
+                    a.nav-link(href='/#')
+                      | Home 
+                      span.sr-only (current)
+                li.nav-item
+                    a.nav-link(href='/usuarios/create') SigIn
+                li.nav-item
+                    a.nav-link(href='/login') LogIn
+                li.nav-item
+                    a.nav-link(href='/usuarios') Lista Emprendedores
+            form.form-inline.my-2.my-lg-0
+                input.form-control.mr-sm-2(type='search' placeholder='Search' aria-label='Search' id='busqueda')
+                button.btn.btn-outline-success.my-2.my-sm-0(type='submit' id="buscador") Search
+
+            br
+            br
+
+    #Catalogo.p-5
+    .container
+        h1.text-center.p-3.mt-3 Emprendimientos Disponibles
+        hr
+        .row
+            each emprendedor in usuarios
+                .col-12.col-sm-6.col-md-4.col-lg-3.p-3
+                    .card
+                    img.card-img-top(src='/assets/img/portfolio/circus.png' alt='Card image cap')
+                    .card-body
+                        h5.card-title= emprendedor.nombre
+                        p.card-text Acá irá la información que haya ingresado con anterioridad el usuario
+                    a.btn.btn-primary(href='/emprendedores/'+ emprendedor.nombre)
+                        | Ver m&aacute;s
+
+
+    script.
+        $("#buscador").click(() => {
+        let busqueda = $("#busqueda").val()
+        console.log(busqueda)
+        })

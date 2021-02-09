@@ -1,7 +1,6 @@
 var jwt = require("jsonwebtoken");
 const SECRET_KEY = "llavesecreta";
 var Usuario = require("../models/usuarios");
-var Token = require("../models/token");
 
 module.exports = {
   loginView: (req, res, next) => {
@@ -10,15 +9,13 @@ module.exports = {
 
   loginPost: (req, res, next) => {
     const { correo, password } = req.body;
-    Usuario.findOne({ correo: correo }, (err, usuario) => {
+    Usuario.findOne( {correo: correo} , (err, usuario) => {
       let token = usuario
         ? jwt.sign({ id: usuario._id, nombre: usuario.nombre }, SECRET_KEY)
         : false;
 
       //res.status(200).json({message: 'usuario encontrado', data:{usuario: usuario, token: token}})
-      usuario && usuario.password == password
-        ? res.redirect(`/admin?token=${token}`)
-        : res.redirect("/login");
+      usuario && usuario.password == password ? res.redirect(`/admin?token=${token}`) : res.redirect('/login')
     });
   },
 

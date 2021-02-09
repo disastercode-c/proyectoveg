@@ -8,15 +8,15 @@ head
   link(rel='stylesheet', href='../../stylesheets/login.css')
   meta(name='google-site-verification' content='pxOa2Qv7Wq0cQ78SbERxoOVDxJ-XbKHZL8rvLmki3xs')
 
-
+include ../navbar
+br
 br
 body#LoginForm.p-3
-  include ../navbar
-  .container.p-3
+  .container
     .login-form
       .main-div
         .panel
-          if info
+          if info && info.message 
             div.alert.alert-danger
               = info.message
           h2 Admin Login
@@ -27,7 +27,7 @@ body#LoginForm.p-3
           .form-group
             input#password.form-control(type='password' placeholder='Password' name="password")
           .forgot
-            a(href='login/forgotPassword') Olvidé mi password
+            a(href='/forgotPassword') Olvidé mi password
 
 
           button.btn.btn-primary(type='submit') Login

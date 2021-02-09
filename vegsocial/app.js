@@ -20,6 +20,7 @@ var usuariosApiRouter = require('./routes/api/usuariosApi');
 var tokenRouter = require('./routes/token');
 var adminRouter = require('./routes/admin');
 var loginRouter = require('./routes/login');
+var emprendedoresRouter = require('./routes/emprendedores')
 
 
 var app = express();
@@ -44,7 +45,7 @@ app.use('/api/usuarios', usuariosApiRouter);
 app.use('/token', tokenRouter)
 app.use('/admin', adminRouter)
 app.use('/login', loginRouter)
-
+app.use('/emprendedores', emprendedoresRouter)
 
 app.get('/forgotpassword', (req,res,next)=>{
   res.render('session/login')

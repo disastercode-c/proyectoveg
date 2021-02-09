@@ -1,0 +1,45 @@
+#portfolioModal.portfolio-modal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='portfolioModal1Label' aria-hidden='true')
+    .modal-dialog.modal-xl(role='document')
+      .modal-content
+        button.close(type='button' data-dismiss='modal' aria-label='Close')
+          span(aria-hidden='true')
+            i.fas.fa-times
+        .modal-body.text-center
+          .container
+            .row.justify-content-center
+              .col-lg-8
+                // Portfolio Modal - Title
+                h2#portfolioModal1Label.portfolio-modal-title.text-secondary.text-uppercase.mb-0 Ingreso de producto
+                // Icon Divider
+                .divider-custom
+                  .divider-custom-line
+                  .divider-custom-icon
+                    i.fas.fa-star
+                  .divider-custom-line
+                .form-group
+                    label(for='exampleInputEmail1') Nombre Producto
+                    input.form-control(maxlength='30' data-target='name' placeholder='Ingrese el nombre del producto')
+                .form-group
+                    label(for='description') Descripción Producto
+                    textarea.form-control(rows='5' data-target='description' placeholder='Ingrese el nombre del producto' name='description')
+                .form-group
+                    label(for='exampleInputEmail1') Stock
+                    input.form-control(data-target='stock' type='number' placeholder='Ingrese cantidad')
+                .form-group
+                    label(for='exampleInputEmail1') Precio
+                    input.form-control(data-target='price' type='number' placeholder='Ingrese el precio del producto')
+                .form-group.d-flex.flex-column
+                    img#preview(width='150')
+                    label(for='insertimg') Inserte una imagen
+                    input.form-control(data-target='image' type='file' placeholder='Ingrese imagen del producto' name='insertimg')
+                    small#passwordHelpInline.text-muted
+                        | Peso m&aacute;ximo: 5MB
+                .row
+                    .col-4
+                        .button.btn.btn-primary(type='submit') Agregar
+                    .col-4
+                        .button.btn.btn-warning(type='submit') Actualizar
+                    .col-4
+                        .button.btn.btn-danger(data-dismiss='modal')
+                            i.fas.fa-times.fa-fw
+                            |                                         Cerrar

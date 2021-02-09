@@ -27,6 +27,10 @@ form.container.mt-5(action='/usuarios/create' method='POST')
         input#exampleInputEmail1.form-control(type='email' aria-describedby='emailHelp' placeholder='Enter email' name="correo" class=errors.correo ? 'is-invalid':'')
         small#emailHelp.form-text.text-muted We&apos;ll never share your email with anyone else.
     .form-group
+        label(for='exampleInputEmail1') Email
+        input#exampleInputEmail1.form-control(type='email' aria-describedby='emailHelp' placeholder='Enter email' name="correo" class=errors.correo ? 'is-invalid':'')
+        small#emailHelp.form-text.text-muted We&apos;ll never share your email with anyone else.
+    .form-group
         label(for='exampleInputPassword1') Ubicación
         input#exampleInputPassword1.form-control(type='text' placeholder='Latitud' name="lat" class=errors.latitud ? 'is-invalid':'')
         input#exampleInputPassword1.form-control(type='text' placeholder='Longitud' name="lng" class=errors.longitud ? 'is-invalid':'')

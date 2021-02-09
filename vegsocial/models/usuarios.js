@@ -3,7 +3,7 @@ var Schema = mongoose.Schema
 const uniqueValidator = require('mongoose-unique-validator')
 const { send } = require('../mailer/nodemailer')
 const Token = require('../models/token')
-
+const crypto = require('crypto')
 
 
 const validateEmail = (correo)=>{
@@ -23,6 +23,7 @@ var usuarioSchema = new Schema({
     unique: true, 
     lowercase: true, 
     validate: [validateEmail, 'Ingrese un mail válido, por favor']},
+  telefono: String,  
   ubicacion: {
     type: [Number], index: {type: '2dsphere', sparse: true}
   },

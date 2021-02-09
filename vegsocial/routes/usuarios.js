@@ -9,4 +9,5 @@ router.post("/delete", usuarioController.delete)
 router.get("/update/:id", usuarioController.update_get)
 router.post("/update/:id", usuarioController.update)
 
+
 module.exports = router;
